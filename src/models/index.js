@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
-
+require("tedious");
 require('dotenv').config();
 console.log("Database Host:", process.env.DB_HOST);
 const sequelize = new Sequelize(
@@ -9,7 +9,8 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,
     dialect: 'mssql',
-    logging: false,
+    dialectModule: require("tedious"),
+    logging: true,
   }
 );
 
