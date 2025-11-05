@@ -3,12 +3,13 @@ console.log("server started");
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: "./.env" });
 }
+
+
 const path = require('path');
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const db = require("./models");
-const {seedDatabase} = require("./data/seedFamily_Types");
 const app = express();
 app.use(morgan("combined"));
 app.use(express.json());
@@ -27,7 +28,6 @@ app.use('/public', express.static(path.join(__dirname, '../public'), {
       console.log(`Serving static file: ${path}`);
     }
   }));
-  seedDatabase();
 db.sequelize.sync({ alt: true })
   .then(() => {
     const port = process.env.PORT || 8080;
