@@ -47,7 +47,6 @@ module.exports = {
     async getAllFamille(req, res) {
         try { 
             const famille = await Famille.findAll();
-            console.log(famille);
             if (!famille) {
                 return res.status(404).send({
                     error: "Familles not found."

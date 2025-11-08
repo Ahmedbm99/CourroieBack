@@ -48,7 +48,6 @@ module.exports = {
     async getAllTypes(req, res) {
         try { 
             const types = await Types.findAll();
-            console.log(types);
             if (!types) {
                 return res.status(404).send({
                     error: "Types not found."
@@ -67,7 +66,6 @@ module.exports = {
             where: { famille_id: req.params.famille_id }
         });
 
-        console.log(types);
 
         if (!types || types.length === 0) {
             return res.status(404).send({

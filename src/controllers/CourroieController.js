@@ -64,9 +64,10 @@ module.exports = {
     try {
         const belts = await Courroie.findAll({
             where: {
-                famille_id: req.params.famille_id
+                famille_courroie_id: req.params.famille_id
             }
         });
+        console.log("Belts found:", belts);
         if (!belts) {
             return res.status(404).send({
                 error: "No belts found for the specified family."
@@ -84,7 +85,7 @@ async getBeltsByType(req, res) {
     try {
         const belts = await Courroie.findAll({
             where: {
-                type_id: req.params.type_id
+                type_courroie_id: req.params.type_id
             }
         });
         if (!belts) {
@@ -102,8 +103,8 @@ async getBeltsByFamilyAndType(req, res) {
     try {
         const belts = await Courroie.findAll({
             where: {
-                famille_id: req.params.famille_id,
-                type_id: req.params.type_id
+                famille_courroie_id: req.params.famille_id,
+                type_courroie_id: req.params.type_id
             }
         });
         if (!belts) {
