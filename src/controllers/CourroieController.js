@@ -103,8 +103,8 @@ async getBeltsByFamilyAndType(req, res) {
     try {
         const belts = await Courroie.findAll({
             where: {
-                famille_courroie_id: req.params.famille_id,
-                type_courroie_id: req.params.type_id
+                famille_courroie_id: Number(req.params.famille_id),
+                type_courroie_id: Number(req.params.type_id)
             }
         });
         if (!belts) {
