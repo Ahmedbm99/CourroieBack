@@ -213,7 +213,7 @@ async getBeltsByProfileDimensionsAndType(req, res) {
             where: {
                 profile: req.params.profile,
                 dimension: req.params.dimension,
-                type_id: req.params.type_id
+                type_courroie_id: req.params.type_id
             }
         });
         if (!belts) {
@@ -235,8 +235,8 @@ async getBeltsByProfileDimensionsTypeAndFamily(req, res) {
             where: {
                 profile: req.params.profile,
                 dimension: req.params.dimension,
-                type_id: req.params.type_id,
-                famille_id: req.params.famille_id
+                type_courroie_id: req.params.type_id,
+                famille_courroie_id: req.params.famille_id
             }
         });
         if (!belts) {
