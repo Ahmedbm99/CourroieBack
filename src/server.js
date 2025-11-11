@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: "./.env" });
 }
 
-
 const path = require('path');
 const express = require("express");
 const cors = require("cors");
@@ -28,7 +27,7 @@ app.use('/public', express.static(path.join(__dirname, '../public'), {
       console.log(`Serving static file: ${path}`);
     }
   }));
-db.sequelize.sync({ alt: true })
+db.sequelize.sync({ alter: true })
   .then(() => {
     const port = process.env.PORT || 8080;
     app.listen(port, () => console.log(` Server running on port ${port}`));
