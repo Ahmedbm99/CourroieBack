@@ -13,23 +13,23 @@ const app = express();
 app.use(morgan("combined"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+const allowedOrigins = [
+  'https://ahmedbm99.github.io',
+  'http://localhost:5173',
+  '*'
+];
 
-app.use((req, res, next) => {
-        const allowedOrigins = [
-        'http://localhost:5173',
-        'https://ahmedbm99.github.io'
-    ];
-    const origin = req.headers.origin;
-
-    if (allowedOrigins.includes(origin)) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-        res.setHeader('Access-Control-Allow-Credentials', 'true'); // needed if sending cookies/auth headers
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
+}));
 require("./routes")(app);
 app.use('/public', express.static(path.join(__dirname, '../public'), {
     setHeaders: (res, path) => {
