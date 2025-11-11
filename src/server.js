@@ -27,7 +27,7 @@ app.use('/public', express.static(path.join(__dirname, '../public'), {
       console.log(`Serving static file: ${path}`);
     }
   }));
-db.sequelize.sync({ alter: true })
+db.sequelize.sync({ alter: false })
   .then(() => {
     const port = process.env.PORT || 8080;
     app.listen(port, () => console.log(` Server running on port ${port}`));
