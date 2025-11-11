@@ -27,9 +27,14 @@ app.use('/public', express.static(path.join(__dirname, '../public'), {
       console.log(`Serving static file: ${path}`);
     }
   }));
+db.sequelize
+  .authenticate()
+  .then(() => console.log('✅ Connected to database'))
+  .catch((err) => console.error('❌ Database connection error:', err));
+
 db.sequelize.sync({ alter: false })
   .then(() => {
-    const port = process.env.PORT || 8080;
+    const port = process.env.PORT;
     app.listen(port, () => console.log(` Server running on port ${port}`));
   })
   .catch((error) => {
@@ -41,3 +46,4 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send({ error: 'Something went wrong!' });
 });
+
