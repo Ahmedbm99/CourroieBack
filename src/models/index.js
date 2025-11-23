@@ -19,6 +19,7 @@ const sequelize = new Sequelize(
   }
 );
 
+
 const db = {};
 db.Famille = require('./Famille')(sequelize, DataTypes);
 db.Types = require('./Types')(sequelize, DataTypes);
@@ -26,8 +27,8 @@ db.Courroie = require('./Courroie')(sequelize, DataTypes);
 db.CourroieFiche = require('./CourroieFiche')(sequelize, DataTypes);
 db.CourroieImage = require('./CourroieImage')(sequelize, DataTypes);
 db.CourroieMatiere = require('./CourroieMatiere')(sequelize, DataTypes);
-
-
+db.Avis = require('./Feedback')(sequelize,DataTypes);
+ db.Devis = require('./Devis')(sequelize,DataTypes);
 Object.keys(db).forEach((modelName) => {
   if ('associate' in db[modelName]) {
     db[modelName].associate(db)

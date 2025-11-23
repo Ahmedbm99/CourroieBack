@@ -85,6 +85,138 @@ async getAllBelts(req, res) {
         });
     }
 },
+async createBelt(req, res) {
+  const {
+    nom,
+    famille_courroie_id,
+    type_courroie_id,
+    profil,
+    description,
+    fabricant,
+    reference_fabricant,
+    largeur_mm,
+    epaisseur_mm,
+    nombre_dents,
+    nombre_nervures,
+    temperature_min,
+    temperature_max,
+    type_denture,
+    remarques,
+    tol_largeur_mm,
+    tol_hauteur_mm,
+    renforcement,
+    vitesse_max_m_s,
+    resistance_traction_n,
+    durete_shore,
+    charge_max_n,
+    conductivite_antistatique,
+    resistance_chimique,
+    flexibilite,
+    forme_dent,
+    hauteur_mm,
+    pas_mm,
+    longueur_int_mm,
+    longueur_prim_mm,
+    longueur_ext_mm,
+    angle_trapeze_deg,
+    poids_g_m,
+    application,
+    images,
+    matieres,
+    fiches
+  } = req.body;
+  console.log("Creating belt with data:", req.body);
+  try {
+    // Create the belt itself
+    const newBelt = await Courroie.create({
+      nom,
+      famille_courroie_id,
+      type_courroie_id,
+      application,
+      profil,
+      description,
+      epaisseur_mm,
+      fabricant,
+      reference_fabricant,
+      largeur_mm,
+      hauteur_mm,
+      pas_mm,
+      poids_g_m,
+      longueur_int_mm,
+      longueur_prim_mm,
+      longueur_ext_mm,
+      angle_trapeze_deg,
+      resistance_chimique,
+      forme_dent,
+      renforcement,
+      flexibilite,
+      conductivite_antistatique,
+      vitesse_max_m_s,
+      charge_max_n,
+      durete_shore,
+      resistance_traction_n,
+      tol_hauteur_mm,
+      tol_largeur_mm,
+      type_denture,
+      temperature_max,
+      temperature_min,
+      nombre_nervures,
+      nombre_dents,
+      remarques
+    });
+
+    // Add associated Images if provided
+    if (images && Array.isArray(images)) {
+      await Promise.all(
+        images.map(img =>
+          CourroieImage.create({
+            courroie_id: newBelt.id,
+            image_url: img.image_url
+          })
+        )
+      );
+    }
+
+    // Add associated Matières if provided
+    if (matieres && Array.isArray(matieres)) {
+      await Promise.all(
+        matieres.map(mat =>
+          CourroieMatiere.create({
+            courroie_id: newBelt.id,
+            matiere: mat.matiere
+          })
+        )
+      );
+    }
+
+    // Add associated Fiches if provided
+    if (fiches && Array.isArray(fiches)) {
+      await Promise.all(
+        fiches.map(f =>
+          CourroieFiche.create({
+            courroie_id: newBelt.id,
+            fiche_technique_url: f.fiche_technique_url
+          })
+        )
+      );
+    }
+
+    const createdBelt = await Courroie.findByPk(newBelt.id, {
+      include: [
+        { model: CourroieImage, as: 'Images', attributes: ['id', 'image_url'] },
+        { model: CourroieMatiere, as: 'Matieres', attributes: ['id', 'matiere'] },
+        { model: CourroieFiche, as: 'Fiches', attributes: ['id', 'fiche_technique_url'] }
+      ]
+    });
+
+    res.status(201).send(createdBelt);
+  } catch (error) {
+    console.error("Erreur lors de la création de la courroie :", error);
+    res.status(500).send({
+      error: "Erreur lors de la création de la courroie : " + error.message
+    });
+  }
+},
 
   async getBeltsByFamily(req, res) {
         try {
