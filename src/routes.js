@@ -3,6 +3,7 @@ const CourroieController = require('./controllers/CourroieController');
 const DevisController = require('./controllers/DevisController');
 const FamilleController = require('./controllers/FamilleController');
 const TypesController = require('./controllers/TypesController');
+const CaptchaController = require('./controllers/CaptchaController');
 
 module.exports = (app) => {
     // Routes pour la gestion des courroies
@@ -36,4 +37,7 @@ module.exports = (app) => {
 
     // Routes pour Gestion les commandes
     app.post('/apiv1/devis',DevisController.addDevis); //Ajouter des devis
+
+    app.post("/apiv1/auth/send-otp", CaptchaController.sendOTP); // Vérification Captcha
+    app.post("/apiv1/auth/verify-contact", CaptchaController.verifyContact); // Vérification OTP
 };

@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://ahmedbm99.github.io');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
@@ -27,6 +27,7 @@ app.use('/public', express.static(path.join(__dirname, '../public'), {
       console.log(`Serving static file: ${path}`);
     }
   }));
+  /*
 db.sequelize
   .authenticate()
   .then(() => console.log('✅ Connected to database'))
@@ -40,8 +41,10 @@ db.sequelize.sync({ alter: false })
   .catch((error) => {
     console.error(" Database connection failed:", error);
   });
-
-  
+*/
+  app.listen(process.env.PORT, () => {
+    console.log(` Server running on port ${process.env.PORT}`);
+});
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send({ error: 'Something went wrong!' });
