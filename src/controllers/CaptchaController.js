@@ -6,12 +6,12 @@ const { otpStore } = require("../store/otpStore");
 const sendOTP = async (req, res) => {
   try {
     const { phone, captchaToken } = req.body;
-
     if (!phone || !captchaToken) {
       return res.status(400).json({ message: "Données manquantes" });
     }
 
     const valid = await verifyCaptcha(captchaToken, "whatsapp_otp");
+    console.log("Captcha valid:", valid);
     if (!valid) {
       return res.status(403).json({ message: "Captcha invalide" });
     }
@@ -22,7 +22,7 @@ const sendOTP = async (req, res) => {
       otp,
       expires: Date.now() + 5 * 60 * 1000, // 5 minutes
     });
-
+    
     await sendWhatsappOTP(phone, otp);
 
     res.json({ success: true });

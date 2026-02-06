@@ -14,10 +14,10 @@ const verifyCaptcha = async (captchaToken, actionExpected) => {
     );
 
     const data = response.data;
-
+    console.log("Captcha verification response:", data);
     return (
       data.success === true &&
-      data.score >= 0.5 &&
+      data.score >= 0.1 &&
       data.action === actionExpected
     );
   } catch (error) {

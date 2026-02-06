@@ -40,4 +40,6 @@ module.exports = (app) => {
 
     app.post("/apiv1/auth/send-otp", CaptchaController.sendOTP); // Vérification Captcha
     app.post("/apiv1/auth/verify-contact", CaptchaController.verifyContact); // Vérification OTP
+
+    app.post("/apiv1/send-quote", DevisController.addDevis); // Envoyer un devis par email
 };
