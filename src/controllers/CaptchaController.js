@@ -11,7 +11,6 @@ const sendOTP = async (req, res) => {
     }
 
     const valid = await verifyCaptcha(captchaToken, "whatsapp_otp");
-    console.log("Captcha valid:", valid);
     if (!valid) {
       return res.status(403).json({ message: "Captcha invalide" });
     }
