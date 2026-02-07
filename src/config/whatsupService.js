@@ -7,12 +7,10 @@ const client = twilio(
 );
 
 const sendWhatsappOTP = async (phone, otp) => {
-  console.log(`Sending WhatsApp OTP to ${phone}`);
-  console.log(`Using Twilio Account SID: ${client.accountSid}`)
-  ;
+
   return client.messages.create({
-    from: process.env.TWILIO_WHATSAPP_NUMBER, // numéro sandbox Twilio
-    contentSid: process.env.CONTENT_SID, // template WhatsApp
+    from: process.env.TWILIO_WHATSAPP_NUMBER, 
+    contentSid: process.env.CONTENT_SID, 
     contentVariables: JSON.stringify({ "1": otp }),
     to: `whatsapp:${phone}`,
   });
