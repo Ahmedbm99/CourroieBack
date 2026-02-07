@@ -18,7 +18,7 @@ const verifyCaptcha = async (captchaToken, actionExpected) => {
     console.log(data.success, data.score, data.action );
     return (
       data.success === true &&
-      data.score >= 0.1 &&
+      data.score >= 0.5 &&
       data.action === actionExpected
     );
   } catch (error) {

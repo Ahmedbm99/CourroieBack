@@ -7,6 +7,7 @@ const client = twilio(
 );
 
 const sendWhatsappOTP = async (phone, otp) => {
+  console.log(process.env.TWILIO_WHATSAPP_NUMBER , phone);
 
   return client.messages.create({
     from: process.env.TWILIO_WHATSAPP_NUMBER, 
