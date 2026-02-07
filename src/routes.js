@@ -4,7 +4,7 @@ const DevisController = require('./controllers/DevisController');
 const FamilleController = require('./controllers/FamilleController');
 const TypesController = require('./controllers/TypesController');
 const CaptchaController = require('./controllers/CaptchaController');
-
+const ContactController = require('./controllers/ContactController');
 module.exports = (app) => {
     // Routes pour la gestion des courroies
     app.post('/apiv1/courroies', CourroieController.createBelt);  // Mettre à jour une courroie
@@ -42,4 +42,6 @@ module.exports = (app) => {
     app.post("/apiv1/auth/verify-contact", CaptchaController.verifyContact); // Vérification OTP
 
     app.post("/apiv1/send-quote", DevisController.addDevis); // Envoyer un devis par email
+
+    app.post("/apiv1/contact/send-message", ContactController.sendMessageContact); // Envoyer un message de contact par email
 };
